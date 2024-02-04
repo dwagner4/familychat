@@ -39,8 +39,14 @@ const Auth = () => {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>Authentication</h1>
+    <div style={{ 
+      textAlign: "center",
+      backgroundColor: "lightgreen",
+      padding: "10%",
+      margin: "10%",
+      borderRadius: "20px"
+    }}>
+      <h1>Login</h1>
       <Button
         type="primary"
         icon={<GoogleOutlined />}
