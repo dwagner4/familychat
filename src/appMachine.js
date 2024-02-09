@@ -10,15 +10,15 @@ const appMachine = setup(
 ).createMachine(
   {
     context: {
-      user: {},
+      user: null,
       chats: [],
       activechat: null,
       notifications: [],
     },
     id: "New Machine",
-    initial: "initialing",
+    initial: "initializing",
     states: {
-      initialing: {
+      initializing: {
         on: {
           NOCHATID: {
             target: "Splash",
@@ -71,8 +71,14 @@ const appMachine = setup(
   }
 );
 
+console.log(appMachine)
+
 export const AppActor = createActor(appMachine, {
     systemId: 'root-family-chat',
   })
+
+console.log(AppActor)
   
-  AppActor.start()
+AppActor.start()
+
+console.log(AppActor) 
