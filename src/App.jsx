@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Auth from './components/Auth.jsx'
 import AdSpace from './components/AdSpace.jsx'
@@ -11,29 +11,29 @@ import ThreadNav from './components/ThreadNav.jsx'
 import { AppActor } from './appMachine.js'
 
 function App() {
-  const [ appstate, setAppstate ] = useState({
-
-  })
+  const [ uistate, setUistate ] = useState({})
 
   AppActor.subscribe((snapshot) => {
-    console.log(snapshot.context)
+    setUistate(snapshot.context)
   })
 
-  const xxx = AppActor.getSnapshot()
-  console.log(xxx.context)
+  useEffect(() => {
+    const snap = AppActor.getSnapshot()
+    setUistate(snap.context)
+  }, [])
 
-  console.log(AppActor)
+  console.log(uistate)
 
   return (
     <>
-      <AdSpace />
-      <ProgressBar />
-      <ChatDisplay />
-      <Menu />
-      <ThreadNav />
-      <Notification />
-      <GoGame />
-      <Auth />
+      {  uistate.showAds ? <AdSpace /> : null}
+      {  uistate.showProgress ? <ProgressBar /> : null}
+      {  uistate.showChat ? <ChatDisplay /> : null}
+      {  uistate.showMenu ? <Menu /> : null}
+      {  uistate.showThreadNav ? <ThreadNav /> : null}
+      {  uistate.showNotification ? <Notification /> : null}
+      {  uistate.showGame ? <GoGame /> : null}
+      {  uistate.showAuth ? <Auth /> : null}
     </>
   )
 }

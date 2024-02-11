@@ -38,6 +38,10 @@ const Auth = () => {
       });
   };
 
+  const handleRegister = () => {
+    console.log("fuck registration")
+  }
+
   return (
     <div style={{ 
       textAlign: "center",
@@ -74,6 +78,13 @@ const Auth = () => {
         style={{ marginTop: 8 }}
       >
         Login
+      </Button>
+      <Button
+        type="primary"
+        onClick={handleRegister}
+        style={{ marginTop: 8 }}
+      >
+        Register
       </Button>
     </div>
   );

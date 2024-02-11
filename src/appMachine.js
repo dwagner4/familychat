@@ -14,6 +14,22 @@ const appMachine = setup(
       chats: [],
       activechat: null,
       notifications: [],
+      // showProgress: true,
+      // showAuth: false,
+      // showAds: false,
+      // showChat: false,
+      // showGame: false,
+      // showNotification: false,
+      // showThreadNav: false,
+      // showMenu: true,
+      showProgress: true,
+      showAuth: true,
+      showAds: true,
+      showChat: true,
+      showGame: true,
+      showNotification: true,
+      showThreadNav: true,
+      showMenu: true,
     },
     id: "New Machine",
     initial: "initializing",
@@ -21,64 +37,54 @@ const appMachine = setup(
       initializing: {
         on: {
           NOCHATID: {
-            target: "Splash",
+            target: "Login",
           },
           HASCHATID: {
             target: "NameInput",
           },
         },
       },
-      Splash: {
+      Login: {
         on: {
           LOGIN: {
             target: "MemberNav",
-          },
-          REGISTER: {
-            target: "Registering",
           },
         },
       },
       NameInput: {
         on: {
-          HasName: {
+          GOCHAT: {
             target: "VisitorChatting",
           },
         },
       },
       MemberNav: {
         on: {
-          ChatSelected: {
+          CHATSELECTED: {
             target: "MemberChatting",
           },
         },
       },
-      Registering: {
+      VisitorChatting: {},
+      MemberChatting: {
         on: {
-          ERROR: {
-            target: "Registering",
-          },
-          CANCEL: {
-            target: "Splash",
-          },
-          SUCCESS: {
+          QUITCHAT: {
             target: "MemberNav",
           },
         },
       },
-      VisitorChatting: {},
-      MemberChatting: {},
     },
   }
 );
 
-console.log(appMachine)
+// console.log(appMachine)
 
 export const AppActor = createActor(appMachine, {
     systemId: 'root-family-chat',
   })
 
-console.log(AppActor)
+// console.log(AppActor)
   
 AppActor.start()
 
-console.log(AppActor) 
+// console.log(AppActor) 
