@@ -1,13 +1,16 @@
 import React from 'react';
+import {AppActor} from '../appMachine.js';
 
 const ProgressBar = () => {
   const [progress, setProgress] = React.useState(0);
 
   const onChatId = (e) => {
     console.log("has chat id")
+    AppActor.send({ type: "HAS_CHAT_ID" });
   };
   const onNoId = (e) => {
-    console.log("no chat id")
+    console.log("no chat id");
+    AppActor.send({ type: "NO_CHAT_ID" });
   };
 
   return (

@@ -2,7 +2,31 @@ import { createMachine, createActor, assign, setup } from "xstate";
 
 const appMachine = setup(
     {
-        actions: {},
+        actions: {  
+          displayLogin: assign({
+              showProgress: false,
+              showAuth: true,
+              showAds: true,
+              showChat: false,
+              showGame: false,
+              showNotification: false,
+              showThreadNav: false,
+              showMenu: true,
+              showNameInput: false
+            }),
+          displayNameInput: assign({
+              showProgress: false,
+              showAuth: false,
+              showAds: true,
+              showChat: false,
+              showGame: false,
+              showNotification: false,
+              showThreadNav: false,
+              showMenu: true,
+              showNameInput: true,
+            }),
+
+        },
         actors: {},
         guards: {},
         delays: {},
@@ -14,21 +38,13 @@ const appMachine = setup(
       chats: [],
       activechat: null,
       notifications: [],
-      // showProgress: true,
-      // showAuth: false,
-      // showAds: false,
-      // showChat: false,
-      // showGame: false,
-      // showNotification: false,
-      // showThreadNav: false,
-      // showMenu: true,
       showProgress: true,
-      showAuth: true,
-      showAds: true,
-      showChat: true,
-      showGame: true,
-      showNotification: true,
-      showThreadNav: true,
+      showAuth: false,
+      showAds: false,
+      showChat: false,
+      showGame: false,
+      showNotification: false,
+      showThreadNav: false,
       showMenu: true,
     },
     id: "New Machine",
@@ -36,15 +52,16 @@ const appMachine = setup(
     states: {
       initializing: {
         on: {
-          NOCHATID: {
+          NO_CHAT_ID: {
             target: "Login",
           },
-          HASCHATID: {
+          HAS_CHAT_ID: {
             target: "NameInput",
           },
         },
       },
       Login: {
+        entry: "displayLogin",
         on: {
           LOGIN: {
             target: "MemberNav",
@@ -52,6 +69,7 @@ const appMachine = setup(
         },
       },
       NameInput: {
+        entry: "displayNameInput",
         on: {
           GOCHAT: {
             target: "VisitorChatting",
@@ -87,4 +105,4 @@ export const AppActor = createActor(appMachine, {
   
 AppActor.start()
 
-// console.log(AppActor) 
+// console.log(AppActor) ./AppActor
