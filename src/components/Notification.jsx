@@ -5,6 +5,7 @@ const Notification = () => {
     <div style={{ 
       backgroundColor: 'yellow', 
       textAlign: "center",
+      width: '400px',
       padding: "10%",
       margin: "10%",
       borderRadius: "20px",

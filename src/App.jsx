@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Auth from './components/Auth.jsx'
 import NameInput from './components/NameInput.jsx'
-import AdSpace from './components/AdSpace.jsx'
+import AdSpace from './components/adspace/AdSpace.jsx'
 import ChatDisplay from './components/ChatDisplay.jsx'
 import Menu from './components/menu/Menu.jsx'
+
+import NavBar from './components/navbar/NavBar.jsx'
+
 import ProgressBar from './components/ProgressBar.jsx'
 import GoGame from './components/GoGame.jsx'
 import Notification from './components/Notification.jsx'
@@ -31,6 +34,7 @@ function App() {
       {  uistate.showProgress ? <ProgressBar /> : null}
       {  uistate.showChat ? <ChatDisplay /> : null}
       {  uistate.showMenu ? <Menu /> : null}
+      {  uistate.showNavBar ? <NavBar /> : null}
       {  uistate.showThreadNav ? <ThreadNav /> : null}
       {  uistate.showNotification ? <Notification /> : null}
       {  uistate.showGame ? <GoGame /> : null}
