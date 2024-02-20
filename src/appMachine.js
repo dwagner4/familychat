@@ -19,7 +19,7 @@ const appMachine = setup(
               showProgress: false,
               showAuth: false,
               showAds: false,
-              showChat: false,
+              showChat: true,
               showGame: false,
               showNotification: false,
               showThreadNav: false,

@@ -3,7 +3,7 @@ import './App.css'
 import Auth from './components/Auth.jsx'
 import NameInput from './components/NameInput.jsx'
 import AdSpace from './components/adspace/AdSpace.jsx'
-import ChatDisplay from './components/ChatDisplay.jsx'
+import ChatDisplay from './components/chatdisplay/ChatDisplay.jsx'
 import Menu from './components/menu/Menu.jsx'
 
 import NavBar from './components/navbar/NavBar.jsx'
