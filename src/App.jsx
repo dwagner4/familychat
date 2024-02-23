@@ -1,47 +1,61 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import Auth from './components/Auth.jsx'
-import NameInput from './components/NameInput.jsx'
-import AdSpace from './components/adspace/AdSpace.jsx'
-import ChatDisplay from './components/chatdisplay/ChatDisplay.jsx'
-import Menu from './components/menu/Menu.jsx'
+import React, { useState } from "react";
+import { AppBar, Box, Button, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
-import NavBar from './components/navbar/NavBar.jsx'
+const App = () => {
+  const [open, setOpen] = useState(false);
 
-import ProgressBar from './components/ProgressBar.jsx'
-import GoGame from './components/GoGame.jsx'
-import Notification from './components/Notification.jsx'
-import ThreadNav from './components/ThreadNav.jsx'
-import { AppActor } from './appMachine.js'
-
-function App() {
-  const [ uistate, setUistate ] = useState({})
-
-  AppActor.subscribe((snapshot) => {
-    setUistate(snapshot.context)
-  })
-
-  useEffect(() => {
-    const snap = AppActor.getSnapshot()
-    setUistate(snap.context)
-  }, [])
-
-  console.log(uistate)
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
 
   return (
-    <>
-      {  uistate.showAds ? <AdSpace /> : null}
-      {  uistate.showProgress ? <ProgressBar /> : null}
-      {  uistate.showChat ? <ChatDisplay /> : null}
-      {  uistate.showMenu ? <Menu /> : null}
-      {  uistate.showNavBar ? <NavBar /> : null}
-      {  uistate.showThreadNav ? <ThreadNav /> : null}
-      {  uistate.showNotification ? <Notification /> : null}
-      {  uistate.showGame ? <GoGame /> : null}
-      {  uistate.showAuth ? <Auth /> : null}
-      {  uistate.showNameInput ? <NameInput /> : null}
-    </>
-  )
-}
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={toggleDrawer}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            App bar
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer anchor="left" open={open} onClose={toggleDrawer}>
+        <Box sx={{ width: 250 }}>
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemText primary="Menu Item 1" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemText primary="Menu Item 2" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemText primary="Menu Item 3" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Box>
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        {/* Content area */}
+        This is content
+      </Box>
+    </Box>
+  );
+};
 
-export default App
+export default App;
+
