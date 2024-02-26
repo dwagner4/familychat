@@ -4,16 +4,7 @@ const appMachine = setup(
     {
         actions: {  
           displayLogin: assign({
-              showProgress: false,
-              showAuth: true,
-              showAds: false,
-              showChat: false,
-              showGame: false,
-              showNotification: false,
-              showThreadNav: false,
-              showMenu: false,
-              showNavBar: true,
-              showNameInput: false
+              page: 'membernav',
             }),
           displayNameInput: assign({
               showProgress: false,
@@ -36,6 +27,7 @@ const appMachine = setup(
 ).createMachine(
   {
     context: {
+      page: 'splash',
       user: null,
       chats: [],
       activechat: null,

@@ -1,61 +1,29 @@
-import React, { useState } from "react";
-import { AppBar, Box, Button, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { useEffect, useState } from 'react'
 
-const App = () => {
-  const [open, setOpen] = useState(false);
+import { AppActor } from './appMachine.js'
+import Splash from './pages/Splash.jsx'
+import MemberNav from './pages/MemberNav.jsx'
 
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+function App() {
+  const [ uistate, setUistate ] = useState({})
+
+  AppActor.subscribe((snapshot) => {
+    setUistate(snapshot.context)
+  })
+
+  useEffect(() => {
+    const snap = AppActor.getSnapshot()
+    setUistate(snap.context)
+  }, [])
+
+  console.log(uistate)
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={toggleDrawer}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            App bar
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer anchor="left" open={open} onClose={toggleDrawer}>
-        <Box sx={{ width: 250 }}>
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Menu Item 1" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Menu Item 2" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Menu Item 3" />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Box>
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* Content area */}
-        This is content
-      </Box>
-    </Box>
-  );
-};
+    <>
+      {  uistate.page === 'splash' ? <Splash /> : null}
+      {  uistate.page === 'membernav' ? <MemberNav /> : null}
+    </>
+  )
+}
 
-export default App;
-
+export default App
