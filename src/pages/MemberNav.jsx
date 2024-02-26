@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AppBar, Box, Button, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import Auth from '../components/Auth.jsx'
 
 const MemberNav = () => {
   const [open, setOpen] = useState(false);
@@ -51,11 +52,8 @@ const MemberNav = () => {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         {/* Content area */}
-        <div>what the fuck</div>
-        <div>what the fuck</div>
-        <div>what the fuck</div>
-        <div>what the fuck</div>
-        <div>what the fuck</div><div>what the fuck</div>
+        
+        <Auth />
       </Box>
     </Box>
   );

@@ -1,4 +1,5 @@
 import { createMachine, createActor, assign, setup } from "xstate";
+import { db, auth } from "./backend.js";
 
 const appMachine = setup(
     {
