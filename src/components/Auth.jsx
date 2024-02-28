@@ -1,93 +1,93 @@
+
 import React, { useState } from "react";
-import { Button, Input, message } from "antd";
-import { GoogleOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
-import axios from "axios";
+import {
+  TextField,
+  Button,
+  FormControl,
+  FormHelperText,
+} from "@mui/material";
 
 const Auth = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const validateEmail = (email) => {
+    return email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+  const validatePassword = (password) => {
+    return password.length >= 8;
   };
 
-  const handleGoogleLogin = () => {
-    // Implement Google login logic here
-    message.info("Google login not yet implemented");
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handlePasswordLogin = () => {
-    if (!username || !password) {
-      message.error("Please enter a username and password");
-      return;
+    let isFormValid = true;
+
+    if (!email || !validateEmail(email)) {
+      setEmailError(true);
+      isFormValid = false;
     }
 
-    axios
-      .post("/api/login", { username, password })
-      .then((response) => {
-        // Handle successful login
-        message.success("Logged in successfully");
-      })
-      .catch((error) => {
-        // Handle login error
-        message.error("Invalid username or password");
-      });
+    if (!password || !validatePassword(password)) {
+      setPasswordError(true);
+      isFormValid = false;
+    }
+
+    if (isFormValid) {
+      // Submit the form data here
+      console.log("Form submitted successfully");
+    }
   };
 
-  const handleRegister = () => {
-    console.log("fuck registration")
-  }
-
   return (
-    <div style={{ 
-      textAlign: "center",
-      backgroundColor: "lightgreen",
-      padding: "10%",
-      margin: "10%",
-      borderRadius: "20px"
-    }}>
-      <h1>Login</h1>
-      <Button
-        type="primary"
-        icon={<GoogleOutlined />}
-        onClick={handleGoogleLogin}
-        style={{ marginRight: 8 }}
-      >
-        Google
+    <div>
+      <form onSubmit={handleSubmit}>
+        <br />
+      <br />
+      <br />
+      <br />
+        <FormControl error={emailError}>
+          <TextField
+            label="Email"
+            variant="outlined"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {emailError && (
+            <FormHelperText>Please enter a valid email address</FormHelperText>
+          )}
+        </FormControl>
+        <br />
+        <FormControl error={passwordError}>
+          <TextField
+            label="Password"
+            type="password"
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {passwordError && (
+            <FormHelperText>
+              Password must be at least 8 characters long
+            </FormHelperText>
+          )}
+        </FormControl>
+        <br />
+        <Button type="submit" variant="contained" color="primary">
+          Login
+        </Button>
+      </form>
+      <Button>
+        Register account
       </Button>
-      <Input
-        prefix={<UserOutlined />}
-        placeholder="Username"
-        value={username}
-        onChange={handleUsernameChange}
-      />
-      <Input.Password
-        prefix={<LockOutlined />}
-        placeholder="Password"
-        value={password}
-        onChange={handlePasswordChange}
-        style={{ marginTop: 8 }}
-      />
-      <Button
-        type="primary"
-        onClick={handlePasswordLogin}
-        style={{ marginTop: 8 }}
-      >
-        Login
-      </Button>
-      <Button
-        type="primary"
-        onClick={handleRegister}
-        style={{ marginTop: 8 }}
-      >
-        Register
+      <Button>
+        Forgot Password
       </Button>
     </div>
-  );
+  )
 };
 
-export default Auth;
+export default Auth

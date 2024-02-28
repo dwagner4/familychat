@@ -1,6 +1,8 @@
 import { createMachine, createActor, assign, setup } from "xstate";
 import { db, auth } from "./backend.js";
 
+
+
 const appMachine = setup(
     {
         actions: {  
@@ -8,18 +10,43 @@ const appMachine = setup(
               page: 'membernav',
             }),
           displayNameInput: assign({
-              showProgress: false,
-              showAuth: false,
-              showAds: false,
-              showChat: true,
-              showGame: false,
-              showNotification: false,
-              showThreadNav: false,
-              showMenu: false,
-              showNavBar: true,
-              showNameInput: true,
+              page: 'membernav',
             }),
-
+          newAccount: (context, event) => {
+            auth.createUserWithEmailAndPassword(event.email, event.password )
+            .then((userCredential) => {
+              // Signed in 
+              const user = userCredential.user;
+              // ...
+            })  
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message; 
+              // ..
+            });
+          },
+          signIn: (context, event) => {
+            auth.signInWithEmailAndPassword(event.email, event.password ) 
+            .then((userCredential) => {
+              // Signed in 
+              const user = userCredential.user;
+              // ...
+            })  
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message; 
+              // ..
+            });
+          },
+          signOut: (context, event) => {
+            auth.signOut()  
+            .then(() => {
+              // Sign-out successful. 
+            })  
+            .catch((error) => {
+              // An error happened. 
+            });
+          },
         },
         actors: {},
         guards: {},
