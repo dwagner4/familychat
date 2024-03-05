@@ -1,4 +1,4 @@
-import { createMachine, createActor, assign, setup } from "xstate";
+import { createMachine, createActor, assign, fromPromise, setup } from 'xstate';
 import { db, auth } from "./backend.js";
 
 
@@ -48,7 +48,23 @@ const appMachine = setup(
             });
           },
         },
-        actors: {},
+        actors: {
+          "isPublicChat": fromPromise(async (ctx, event) => {
+            console.log({ctx, event});
+            return new Promise((resolve, reject) => {
+              // simulate a slow auth method
+              setTimeout(resolve, 1000);
+            });
+          }),
+    
+        "loginMachine": fromPromise(async (ctx, event) => {
+            console.log({ctx, event});
+            return new Promise((resolve, reject) => {
+              // simulate a slow auth method
+              setTimeout(resolve, 1000);
+            });
+          }),
+        },
         guards: {},
         delays: {},
     }
@@ -60,16 +76,6 @@ const appMachine = setup(
       chats: [],
       activechat: null,
       notifications: [],
-      showProgress: true,
-      showAuth: false,
-      showAds: false,
-      showChat: false,
-      showGame: false,
-      showNotification: false,
-      showThreadNav: false,
-      showMenu: false,
-      showNavBar: false,
-      showNameInput: false
     },
     id: "New Machine",
     initial: "initializing",
@@ -86,6 +92,21 @@ const appMachine = setup(
       },
       Login: {
         entry: "displayLogin",
+        "invoke": {
+          "input": {},
+          "src": "loginMachine",
+          onDone: {
+            target: 'MemberNav',
+            actions: (context, event) => {
+              console.log(event, "Fuck You")
+            }
+
+          },
+          onError: {
+            target: 'MemberNav',
+            actions: assign({ error: ({ event }) => event.error }),
+          },
+        },
         on: {
           LOGIN: {
             target: "MemberNav",
@@ -94,6 +115,18 @@ const appMachine = setup(
       },
       NameInput: {
         entry: "displayNameInput",
+        "invoke": {
+          "input": {},
+          "src": "loginMachine",
+          onDone: {
+            target: 'MemberNav',
+
+          },
+          onError: {
+            target: 'MemberNav',
+            actions: assign({ error: ({ event }) => event.error }),
+          },
+        },
         on: {
           GOCHAT: {
             target: "VisitorChatting",
