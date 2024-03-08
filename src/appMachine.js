@@ -1,5 +1,6 @@
-import { createMachine, createActor, assign, fromPromise, setup } from 'xstate';
+import { createMachine, createActor, assign, fromPromise, setup, spawnChild } from 'xstate';
 import { db, auth } from "./backend.js";
+import { authMachine }from "./components/auth/authMachine.js";
 
 
 
@@ -47,6 +48,9 @@ const appMachine = setup(
               // An error happened. 
             });
           },
+          logit: (context, event) => { 
+            console.log(context)
+          }
         },
         actors: {
           "isPublicChat": fromPromise(async (ctx, event) => {
@@ -70,17 +74,27 @@ const appMachine = setup(
     }
 ).createMachine(
   {
+    id: 'appMachine',
     context: {
       page: 'splash',
       user: null,
       chats: [],
       activechat: null,
       notifications: [],
+      authMachineRef: null,
     },
-    id: "New Machine",
     initial: "initializing",
     states: {
       initializing: {
+        entry: [
+          assign({
+            authMachineRef: ({ context, event, spawn }) => {
+              const newCube = spawn(authMachine, { systemId: "authMachine"});
+              return newCube;
+            },
+          }),
+          "logit"
+        ],
         on: {
           NO_CHAT_ID: {
             target: "Login",
@@ -91,22 +105,22 @@ const appMachine = setup(
         },
       },
       Login: {
-        entry: "displayLogin",
-        "invoke": {
-          "input": {},
-          "src": "loginMachine",
-          onDone: {
-            target: 'MemberNav',
-            actions: (context, event) => {
-              console.log(event, "Fuck You")
-            }
+        entry: ["displayLogin", "logit"],
+        // "invoke": {
+        //   "input": {},
+        //   "src": "loginMachine",
+        //   onDone: {
+        //     target: 'MemberNav',
+        //     actions: (context, event) => {
+        //       console.log(event, "Fuck You")
+        //     }
 
-          },
-          onError: {
-            target: 'MemberNav',
-            actions: assign({ error: ({ event }) => event.error }),
-          },
-        },
+        //   },
+        //   onError: {
+        //     target: 'MemberNav',
+        //     actions: assign({ error: ({ event }) => event.error }),
+        //   },
+        // },
         on: {
           LOGIN: {
             target: "MemberNav",
