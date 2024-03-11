@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { AppActor } from './appMachine.js'
+import { AppActor } from './fsm/AppActor.js'
 import Splash from './pages/Splash.jsx'
 import MemberNav from './pages/MemberNav.jsx'
 

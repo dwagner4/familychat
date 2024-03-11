@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppActor} from '../appMachine.js';
+import {AppActor} from '../fsm/AppActor.js';
 import { LinearProgress, Button } from '@mui/material';
 
 const ProgressBar = () => {

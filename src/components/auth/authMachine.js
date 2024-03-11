@@ -1,4 +1,5 @@
 import { createMachine, fromPromise, assign } from "xstate";
+
 export const authMachine = createMachine(
   {
     id: "loginMachine",
