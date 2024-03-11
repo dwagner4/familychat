@@ -1,5 +1,5 @@
 import { assign, fromPromise } from 'xstate';
-import {authMachine} from '../components/auth/authMachine';
+import {authMachine} from '../components/auth/fsm/authMachine';
 
 export const appFunctions = {
     actions: {  
@@ -15,44 +15,6 @@ export const appFunctions = {
       displayNameInput: assign({
           page: 'membernav',
         }),
-      newAccount: (context, event) => {
-        auth.createUserWithEmailAndPassword(event.email, event.password )
-        .then((userCredential) => {
-          // Signed in 
-          const user = userCredential.user;
-          // ...
-        })  
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message; 
-          // ..
-        });
-      },
-      signIn: (context, event) => {
-        auth.signInWithEmailAndPassword(event.email, event.password ) 
-        .then((userCredential) => {
-          // Signed in 
-          const user = userCredential.user;
-          // ...
-        })  
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message; 
-          // ..
-        });
-      },
-      signOut: (context, event) => {
-        auth.signOut()  
-        .then(() => {
-          // Sign-out successful. 
-        })  
-        .catch((error) => {
-          // An error happened. 
-        });
-      },
-      logit: (context, event) => { 
-        console.log(context)
-      }
     },
     actors: {
       "isPublicChat": fromPromise(async (ctx, event) => {

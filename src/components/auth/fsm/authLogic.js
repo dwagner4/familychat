@@ -1,7 +1,4 @@
-import { createMachine, fromPromise, assign } from "xstate";
-
-export const authMachine = createMachine(
-  {
+export const authLogic = {
     id: "loginMachine",
     initial: "loggedOut",
     states: {
@@ -86,32 +83,4 @@ export const authMachine = createMachine(
         },
       },
     },
-  },
-  {
-    actions: {
-      expandUI: assign({
-        expandUI: true,
-      }),
-      minimizeUI: assign({
-        expandUI: false,
-      }),
-      logout: function ({ context, event }, params) {
-        console.log("WTF, loggingout");
-      },
-    },
-    actors: {
-      pwLoginMachine: fromPromise(async () => {
-        return new Promise((resolve, reject) => {
-          setTimeout(resolve, 5000);
-        });
-      }),
-      googleLoginMachine: fromPromise(async () => {
-        return new Promise((resolve, reject) => {
-          setTimeout(resolve, 5000);
-        });
-      }),
-    },
-    guards: {},
-    delays: {},
-  },
-);
+  }
