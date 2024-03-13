@@ -13,6 +13,10 @@ export const authFunctions = {
       },
       sendParentLoggedOut: ({ context, event }) => {},
       sendParentLoggedIn: ({ context, event }) => {},
+      
+      logit: (context, event) => { 
+        console.log(context)
+      },
       newAccount: (context, event) => {
         auth.createUserWithEmailAndPassword(event.email, event.password )
         .then((userCredential) => {
@@ -48,8 +52,23 @@ export const authFunctions = {
           // An error happened. 
         });
       },
-      logit: (context, event) => { 
-        console.log(context)
+      googleSignIn: (context, event) => {
+        auth.signInWithPopup(auth, provider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        const credential = auth.GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
       }
     },
     actors: {

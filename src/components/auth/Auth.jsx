@@ -6,6 +6,9 @@ import {
   FormControl,
   FormHelperText,
 } from "@mui/material";
+import CreateAcctDialog  from "./CreateAcctDialog";
+import GoogleButton from "./GoogleButton"
+
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -80,14 +83,13 @@ const Auth = () => {
           Login
         </Button>
       </form>
-      <Button>
-        Register account
-      </Button>
-      <Button>
-        Forgot Password
-      </Button>
+      
+      <CreateAcctDialog />
+      <GoogleButton />
     </div>
-  )
+  );
 };
+
+
 
 export default Auth
