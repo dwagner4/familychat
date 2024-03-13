@@ -11,6 +11,8 @@ export const authFunctions = {
       logout: function ({ context, event }, params) {
         console.log("WTF, loggingout");
       },
+      sendParentLoggedOut: ({ context, event }) => {},
+      sendParentLoggedIn: ({ context, event }) => {},
       newAccount: (context, event) => {
         auth.createUserWithEmailAndPassword(event.email, event.password )
         .then((userCredential) => {
@@ -57,6 +59,11 @@ export const authFunctions = {
         });
       }),
       googleLoginMachine: fromPromise(async () => {
+        return new Promise((resolve, reject) => {
+          setTimeout(resolve, 5000);
+        });
+      }),
+      createAccount: fromPromise(async () => {
         return new Promise((resolve, reject) => {
           setTimeout(resolve, 5000);
         });
