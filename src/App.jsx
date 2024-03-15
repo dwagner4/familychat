@@ -16,7 +16,7 @@ function App() {
     setUistate(snap.context)
   }, [])
 
-  console.log(uistate)
+  // console.log(uistate)
 
   return (
     <>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-// import Box from '@mui/material/Box';
-import ProgressBar from '../components/ProgressBar.jsx'
+import {LoginButtonPanel} from '../components/login_choice/LoginButtonPanel';
+
+
 
 const Root = styled('div')(({ theme }) => ({
     height: '100vh',
@@ -13,7 +14,7 @@ const Root = styled('div')(({ theme }) => ({
 const Splash = () => {
     return (
         <Root>
-            <ProgressBar / >
+           <LoginButtonPanel />
         </Root>
     );
 };

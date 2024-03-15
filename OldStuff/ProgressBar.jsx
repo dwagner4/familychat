@@ -1,17 +1,17 @@
 import React from 'react';
-import {AppActor} from '../fsm/AppActor.js';
+import {AppActor} from '../src/fsm/AppActor.js';
 import { LinearProgress, Button } from '@mui/material';
 
 const ProgressBar = () => {
   const [progress, setProgress] = React.useState(47);
 
   const onChatId = (e) => {
-    console.log("has chat id")
-    AppActor.send({ type: "HAS_CHAT_ID" });
+    console.log("onChatID")
+    AppActor.send({ type: "CREATE_ACCOUNT" });
   };
   const onNoId = (e) => {
     console.log("no chat id");
-    AppActor.send({ type: "NO_CHAT_ID" });
+    AppActor.send({ type: "CREATE_ACCOUNT" });
   };
 
   return (

@@ -1,7 +1,18 @@
 import React, { useState } from "react";
-import { AppBar, Box, Button, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from "@mui/material";
+import { 
+  AppBar, 
+  Box, 
+  Drawer, 
+  IconButton, 
+  List, 
+  ListItem, 
+  ListItemButton, 
+  ListItemText, 
+  Toolbar, 
+  Typography 
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Auth from '../components/auth/Auth.jsx'
+
 
 const MemberNav = () => {
   const [open, setOpen] = useState(false);
@@ -51,9 +62,11 @@ const MemberNav = () => {
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+
+
         {/* Content area */}
         
-        <Auth />
+        
       </Box>
     </Box>
   );

@@ -1,4 +1,5 @@
 import { fromPromise, assign } from "xstate";
+import {auth} from "../../../backend"
 
 export const authFunctions = {
     actions: {
@@ -11,24 +12,25 @@ export const authFunctions = {
       logout: function ({ context, event }, params) {
         console.log("WTF, loggingout");
       },
-      sendParentLoggedOut: ({ context, event }) => {},
-      sendParentLoggedIn: ({ context, event }) => {},
+      sendParentLoggedOut: ({ context, event }) => {console.log("sendParentLoggedOut")},
+      sendParentLoggedIn: ({ context, event }) => {console.log("sendParentLoggedIn")},
       
       logit: (context, event) => { 
         console.log(context)
       },
-      newAccount: (context, event) => {
-        auth.createUserWithEmailAndPassword(event.email, event.password )
-        .then((userCredential) => {
-          // Signed in 
-          const user = userCredential.user;
-          // ...
-        })  
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message; 
-          // ..
-        });
+      createAccount: (context, event) => {
+        console.log(event)
+        // auth.createUserWithEmailAndPassword(event.email, event.password )
+        // .then((userCredential) => {
+        //   // Signed in 
+        //   const user = userCredential.user;
+        //   // ...
+        // })  
+        // .catch((error) => {
+        //   const errorCode = error.code;
+        //   const errorMessage = error.message; 
+        //   // ..
+        // });
       },
       signIn: (context, event) => {
         auth.signInWithEmailAndPassword(event.email, event.password ) 
@@ -69,7 +71,10 @@ export const authFunctions = {
         const credential = auth.GoogleAuthProvider.credentialFromError(error);
         // ...
       });
-      }
+      },
+      logit: (context, event) => { 
+        console.log(event)
+      },
     },
     actors: {
       pwLoginMachine: fromPromise(async () => {
