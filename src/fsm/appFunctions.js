@@ -1,8 +1,15 @@
 import { assign, fromPromise } from 'xstate';
+import {auth} from "../backend"
 // import {authMachine} from '../../OldStuff/auth/fsm/authMachine';
 
 export const appFunctions = {
     actions: {  
+      spawnIDPW: {
+
+      },
+      spawnGoogle: {
+
+      },
       makeAuthFSM: assign({
         authMachineRef: ({ context, event, spawn }) => {
           // const newAuth = spawn(authMachine, { systemId: "authMachine"});

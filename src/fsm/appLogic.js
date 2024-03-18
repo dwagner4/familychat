@@ -1,86 +1,62 @@
 export const appJSON = {
-    id: 'appMachine',
-    context: {
-      page: 'splash',
-      user: null,
-      chats: [],
-      activechat: null,
-      notifications: [],
-      authMachineRef: null,
+  "context": {
+    "page": "splash",
+    "user": null,
+    "chats": [],
+    "activechat": null,
+    "notifications": [],
+    "authMachineRef": null
+  },
+  "id": "appMachine",
+  "initial": "splash",
+  "states": {
+    "splash": {
+      "on": {
+        "LOGIN_PW_ID": {
+          "target": "logginginIDPW"
+        },
+        "LOGIN_GOOGLE": {
+          "target": "logginginGoggle"
+        },
+        "NO_LOGIN": {
+          "target": "non-member-chat"
+        }
+      }
     },
-    initial: "initializing",
-    states: {
-      initializing: {
-        entry: [
-          "makeAuthFSM",
-          "logit"
-        ],
-        on: {
-          NO_CHAT_ID: {
-            target: "Login",
-          },
-          HAS_CHAT_ID: {
-            target: "NameInput",
-          },
-        },
-      },
-      Login: {
-        entry: ["displayLogin", "logit"],
-        // "invoke": {
-        //   "input": {},
-        //   "src": "loginMachine",
-        //   onDone: {
-        //     target: 'MemberNav',
-        //     actions: (context, event) => {
-        //       console.log(event, "Fuck You")
-        //     }
-
-        //   },
-        //   onError: {
-        //     target: 'MemberNav',
-        //     actions: assign({ error: ({ event }) => event.error }),
-        //   },
-        // },
-        on: {
-          LOGIN: {
-            target: "MemberNav",
-          },
-        },
-      },
-      NameInput: {
-        entry: "displayNameInput",
-        "invoke": {
-          "input": {},
-          "src": "loginMachine",
-          onDone: {
-            target: 'MemberNav',
-
-          },
-          onError: {
-            target: 'MemberNav',
-
-          },
-        },
-        on: {
-          GOCHAT: {
-            target: "VisitorChatting",
-          },
-        },
-      },
-      MemberNav: {
-        on: {
-          CHATSELECTED: {
-            target: "MemberChatting",
-          },
-        },
-      },
-      VisitorChatting: {},
-      MemberChatting: {
-        on: {
-          QUITCHAT: {
-            target: "MemberNav",
-          },
-        },
-      },
+    "logginginIDPW": {
+      "entry":[ 
+        (ctx, event) => console.log("logginginIDPW")
+      ],
+      "on": {
+        "LOGIN_SUCCESS": {
+          "target": "member-chat"
+        }
+      }
     },
+    "logginginGoggle": {
+      "entry":[ 
+        (ctx, event) => console.log("logginginGoogle")
+      ],
+      "on": {
+        "LOGIN_SUCCES": {
+          "target": "member-chat"
+        }
+      }
+    },
+    "non-member-chat": {},
+    "member-chat": {
+      "on": {
+        "LOGOUT": {
+          "target": "logginOUT"
+        }
+      }
+    },
+    "logginOUT": {
+      "on": {
+        "LOGGED_OUT": {
+          "target": "splash"
+        }
+      }
+    }
   }
+}

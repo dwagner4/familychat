@@ -1,6 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import {LoginButtonPanel} from '../components/login_choice/LoginButtonPanel';
+import { AppActor } from '../fsm/AppActor.js'
+import { useSelector } from '@xstate/react';
+import { LoginIDPW } from '../components/login_choice/LoginIDPW';
 
 
 
@@ -11,10 +14,17 @@ const Root = styled('div')(({ theme }) => ({
     backgroundSize: 'cover',
 }));
 
+const selectState = (snapshot) => snapshot.value;
+
 const Splash = () => {
+
+    const uistate = useSelector(AppActor, selectState)
+
+    console.log(uistate)
     return (
         <Root>
-           <LoginButtonPanel />
+           {  uistate === 'splash' ? <LoginButtonPanel /> : null}
+           {  uistate === 'logginginIDPW' ? <LoginIDPW /> : null}
         </Root>
     );
 };

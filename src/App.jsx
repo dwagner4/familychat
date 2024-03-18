@@ -1,27 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useSelector } from '@xstate/react';
 
 import { AppActor } from './fsm/AppActor.js'
 import Splash from './pages/Splash.jsx'
 import MemberNav from './pages/MemberNav.jsx'
 
+const selectState = (snapshot) => snapshot.context.page;
+
 function App() {
-  const [ uistate, setUistate ] = useState({})
 
-  AppActor.subscribe((snapshot) => {
-    setUistate(snapshot.context)
-  })
-
-  useEffect(() => {
-    const snap = AppActor.getSnapshot()
-    setUistate(snap.context)
-  }, [])
-
-  // console.log(uistate)
+  const uistate = useSelector(AppActor, selectState)
 
   return (
     <>
-      {  uistate.page === 'splash' ? <Splash /> : null}
-      {  uistate.page === 'membernav' ? <MemberNav /> : null}
+      {  uistate === 'splash' ? <Splash /> : null}
+      {  uistate === 'membernav' ? <MemberNav /> : null}
     </>
   )
 }
