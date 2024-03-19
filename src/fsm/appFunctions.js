@@ -1,8 +1,8 @@
-import { assign, fromPromise } from 'xstate';
+import { fromPromise, assign } from "xstate";
 import {auth} from "../backend"
 // import {authMachine} from '../../OldStuff/auth/fsm/authMachine';
 
-export const appFunctions = {
+const appFunctions = {
     actions: {  
       spawnIDPW: {
 
@@ -20,8 +20,35 @@ export const appFunctions = {
           page: 'membernav',
         }),
       displayNameInput: assign({
-          page: 'membernav',
-        }),
+        page: 'membernav',
+      }),
+      createAccount: (ctx, event) => {
+        console.log("create account", ctx);
+        // auth.createUserWithEmailAndPassword(event.email, event.password )
+        // .then((userCredential) => {
+        //   // Signed in 
+        //   const user = userCredential.user;
+        //   // ...
+        // })  
+        // .catch((error) => {
+        //   const errorCode = error.code;
+        //   const errorMessage = error.message; 
+        //   // ..
+        // });
+      },
+      signInPW: (ctx) => {
+        console.log("signIn", ctx)
+        // auth.signInWithEmailAndPassword(event.email, event.password ) 
+        // .then((userCredential) => {
+        //   // Signed in 
+        //   const user = userCredential.user;
+        //   // ...
+        // })  
+        // .catch((error) => {
+        //   const errorCode = error.code;
+        //   const errorMessage = error.message; 
+        //   // ..
+        // });
     },
     actors: {
       "isPublicChat": fromPromise(async (ctx, event) => {
@@ -42,4 +69,7 @@ export const appFunctions = {
     },
     guards: {},
     delays: {},
+  }
 }
+
+export {appFunctions}

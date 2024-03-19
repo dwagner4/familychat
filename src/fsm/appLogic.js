@@ -30,6 +30,21 @@ export const appJSON = {
       "on": {
         "LOGIN_SUCCESS": {
           "target": "member-chat"
+        },
+        "SUBMIT": {
+          "target": "logginginIDPW",
+          "actions": {
+            "type": "signInPW"
+          }
+        },
+        "CREATE_ACCOUNT": {
+          "target": "logginginIDPW",
+          "actions": {
+            "type": "createAccount"
+          }
+        },
+        "CANCEL": {
+          "target": "splash"
         }
       }
     },
