@@ -1,5 +1,6 @@
 import { fromPromise, assign } from "xstate";
 import {auth} from "../backend"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 // import {authMachine} from '../../OldStuff/auth/fsm/authMachine';
 
 const appFunctions = {
@@ -22,33 +23,39 @@ const appFunctions = {
       displayNameInput: assign({
         page: 'membernav',
       }),
-      createAccount: (ctx, event) => {
+      createAccount: (ctx) => {
         console.log("create account", ctx);
-        // auth.createUserWithEmailAndPassword(event.email, event.password )
-        // .then((userCredential) => {
-        //   // Signed in 
-        //   const user = userCredential.user;
-        //   // ...
-        // })  
-        // .catch((error) => {
-        //   const errorCode = error.code;
-        //   const errorMessage = error.message; 
-        //   // ..
-        // });
+
+        createUserWithEmailAndPassword(auth, ctx.event.params.email, ctx.event.params.pw )
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log("user", user);
+          // ...
+        })  
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message; 
+          console.log("error", error);
+          // ..
+        });
       },
       signInPW: (ctx) => {
         console.log("signIn", ctx)
-        // auth.signInWithEmailAndPassword(event.email, event.password ) 
-        // .then((userCredential) => {
-        //   // Signed in 
-        //   const user = userCredential.user;
-        //   // ...
-        // })  
-        // .catch((error) => {
-        //   const errorCode = error.code;
-        //   const errorMessage = error.message; 
-        //   // ..
-        // });
+        signInWithEmailAndPassword(auth, ctx.event.params.email, ctx.event.params.pw ) 
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log("user", user);
+          // ...
+        })  
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message; 
+          console.log("error", error);
+
+          // ..
+        });
     },
     actors: {
       "isPublicChat": fromPromise(async (ctx, event) => {

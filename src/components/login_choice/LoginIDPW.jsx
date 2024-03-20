@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState } from 'react';
 import { styled } from '@mui/material/styles';
 import {
   Box,
@@ -39,12 +39,12 @@ const LoginIDPW = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    AppActor.send({ type: "SUBMIT", params: {email: "dean", pw: "fuckyou"} })
+    AppActor.send({ type: "SUBMIT", params: {email: "dean@dean.com", pw: "fuckyou"} })
   };
 
   const handleCreateAccount = (event) => {
     event.preventDefault();
-    AppActor.send({ type: "CREATE_ACCOUNT", params: {email: "dean", pw: "fuckyou"} })
+    AppActor.send({ type: "CREATE_ACCOUNT", params: {email: "dean@dean.com", pw: "fuckyou"} })
   };
 
 
