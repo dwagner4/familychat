@@ -3,9 +3,18 @@ import React from 'react';
 import {
   Button,
   Box,
+  Container,
+  styled
 } from '@mui/material';
 import { AppActor } from '../../fsm/AppActor.js'
 
+const Root = styled(Container)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+}));
 
 
 const LoginButtonPanel = () => {
@@ -19,26 +28,21 @@ const LoginButtonPanel = () => {
     AppActor.send({ type: "LOGIN_GOOGLE" })
   }
 
-
   return (
-    <Box
-      height={200}
-      width={400}
-      my={4}
-      display="flex"
-      alignItems="center"
-      gap={4}
-      p={2}
-      sx={{ border: '2px solid grey' }}
-    >
-      <Button variant="contained" color="primary" onClick={handleIDPW} >
-        Login with ID and Password
-      </Button>
-    
-      <Button variant="contained" color="secondary" onClick={handleGoogle} >
-        Sign in with Google
-      </Button>
-    </Box>
+    <Root>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        my={4}
+        gap={4}
+        p={2}
+        sx={{ border: '2px solid grey', backgroundColor: 'red' }}
+      >
+        <Button variant="contained" color="primary" onClick={handleIDPW} >use Password</Button>
+        <Button variant="contained" color="secondary" onClick={handleGoogle} >Google</Button>
+      </Box>
+    </Root>
   );
 }
 

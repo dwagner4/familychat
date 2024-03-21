@@ -6,10 +6,25 @@ import {
   Container,
   TextField,
   Typography,
+
+
+  FormControl,
+  FormHelperText,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from '@mui/material';
 import { AppActor } from '../../fsm/AppActor';
 
 const LoginIDPW = () => {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const Root = styled(Container)(({ theme }) => ({
     display: 'flex',
@@ -17,40 +32,61 @@ const LoginIDPW = () => {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
-    backgroundColor: "orange"
+    // backgroundColor: "orange"
   }));
 
-  const Form = styled('form')(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  }));
-
-  const InputField = styled(TextField)({
-    width: '100%',
-    maxWidth: '300px',
-    margin: '16px 0',
-  });
-
-  const ButtonContainer = styled(Box)({
-    display: 'flex',
-    gap: '16px',
-  });
-
-  const handleSubmit = (event) => {
+  const handleSubmit = (event) => { 
     event.preventDefault();
-    AppActor.send({ type: "SUBMIT", params: {email: "dean@dean.com", pw: "fuckyou"} })
+    AppActor.send({ type: "SUBMIT", params: {email: email, pw: password } })
   };
 
   const handleCreateAccount = (event) => {
     event.preventDefault();
-    AppActor.send({ type: "CREATE_ACCOUNT", params: {email: "dean@dean.com", pw: "fuckyou"} })
+    AppActor.send({ type: "CREATE_ACCOUNT", params: {email: email, pw: password } })
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
 
   return (
     <Root>
-      <Typography variant="h4">Login</Typography>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Create a new account</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To create a new account, please enter your email address and password.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="email"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="password"
+            label="Password"
+            type="password"
+            fullWidth
+            variant="standard"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSubmit} variant="contained">Login</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleCreateAccount}>Create</Button>
+        </DialogActions>
+      </Dialog>
+      {/* <Typography variant="h4">Login</Typography>
       <Form onSubmit={handleSubmit}>
         <InputField label="Email" type="email" />
         <InputField label="Password" type="password" />
@@ -63,7 +99,7 @@ const LoginIDPW = () => {
             Cancel
           </Button>
         </ButtonContainer>
-      </Form>
+      </Form> */}
     </Root>
   );
 };
