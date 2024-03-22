@@ -24,7 +24,6 @@ const LoginIDPW = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [open, setOpen] = useState(true);
 
   const Root = styled(Container)(({ theme }) => ({
     display: 'flex',
@@ -46,17 +45,17 @@ const LoginIDPW = () => {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    AppActor.send({ type: "CANCEL" })
   };
 
 
   return (
     <Root>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create a new account</DialogTitle>
+      <Dialog open={true} onClose={handleClose}>
+        <DialogTitle>Login or Create a new account</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To create a new account, please enter your email address and password.
+            To login or create a new account, please enter your email address and password.
           </DialogContentText>
           <TextField
             autoFocus
@@ -86,20 +85,6 @@ const LoginIDPW = () => {
           <Button onClick={handleCreateAccount}>Create</Button>
         </DialogActions>
       </Dialog>
-      {/* <Typography variant="h4">Login</Typography>
-      <Form onSubmit={handleSubmit}>
-        <InputField label="Email" type="email" />
-        <InputField label="Password" type="password" />
-        <ButtonContainer>
-          <Button type="submit" variant="contained">
-            Login
-          </Button>
-          <Button variant="outlined" onClick={handleCreateAccount} >Create Account</Button>
-          <Button variant="outlined" color="error">
-            Cancel
-          </Button>
-        </ButtonContainer>
-      </Form> */}
     </Root>
   );
 };

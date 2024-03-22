@@ -36,8 +36,8 @@ const LoginButtonPanel = () => {
         justifyContent="center"
         my={4}
         gap={4}
-        p={2}
-        sx={{ border: '2px solid grey', backgroundColor: 'red' }}
+        p={4}
+        sx={{ border: '2px solid grey', backgroundColor: 'black' }}
       >
         <Button variant="contained" color="primary" onClick={handleIDPW} >use Password</Button>
         <Button variant="contained" color="secondary" onClick={handleGoogle} >Google</Button>
