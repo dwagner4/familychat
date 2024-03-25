@@ -4,6 +4,7 @@ import {LoginButtonPanel} from '../components/login_choice/LoginButtonPanel';
 import { AppActor } from '../fsm/AppActor.js'
 import { useSelector } from '@xstate/react';
 import { LoginIDPW } from '../components/login_choice/LoginIDPW';
+import { Button } from '@mui/material';
 
 
 
@@ -16,15 +17,21 @@ const Root = styled('div')(({ theme }) => ({
 
 const selectState = (snapshot) => snapshot.value;
 
+const handleNoId = () => {
+    AppActor.send({type: 'NO_CHAT_ID'});
+}
+
 const Splash = () => {
 
     const uistate = useSelector(AppActor, selectState)
 
-    console.log(uistate)
+    console.log(uistate, AppActor)
     return (
         <Root>
            {  uistate === 'splash' ? <LoginButtonPanel /> : null}
            {  uistate === 'logginginIDPW' ? <LoginIDPW /> : null}
+           <Button variant="contained" onClick={handleNoId }>No ID</Button>
+        
         </Root>
     );
 };
