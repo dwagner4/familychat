@@ -5,6 +5,7 @@ import { AppActor } from '../fsm/AppActor.js'
 import { useSelector } from '@xstate/react';
 import { LoginIDPW } from '../components/login_choice/LoginIDPW';
 import { Button } from '@mui/material';
+import AuthAlt from '../components/login_choice/AuthAlt';
 
 
 
@@ -28,10 +29,10 @@ const Splash = () => {
     console.log(uistate, AppActor)
     return (
         <Root>
-           {  uistate === 'splash' ? <LoginButtonPanel /> : null}
+           {/* {  uistate === 'splash' ? <Auth /> : null} */}
            {  uistate === 'logginginIDPW' ? <LoginIDPW /> : null}
            <Button variant="contained" onClick={handleNoId }>No ID</Button>
-        
+            <AuthAlt />
         </Root>
     );
 };

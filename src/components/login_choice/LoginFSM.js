@@ -1,4 +1,6 @@
 import { createMachine, fromPromise, assign, sendTo } from "xstate";
+import {auth} from '../../backend.js'
+
 export const LoginFSM = createMachine(
   {
     id: "LoginFSM",
@@ -27,15 +29,22 @@ export const LoginFSM = createMachine(
           onDone: [
             {
               target: "loggedIn",
+              actions: (ctx, event) => {
+                console.log(event);
+              },
             },
           ],
           onError: [
             {
               target: "loggingInGoogle",
+              actions: (ctx, event) => {
+                console.log(event.error);
+              },
             },
           ],
         },
       },
+     
       loginForm: {
         description: "Allows for entry of email\n\nand password.",
         on: {
@@ -63,11 +72,17 @@ export const LoginFSM = createMachine(
           onDone: [
             {
               target: "loggedIn",
+              actions: (ctx, event) => {
+                console.log(event);
+              },
             },
           ],
           onError: [
             {
               target: "loggingInPW",
+              actions: (ctx, event) => {
+                console.log(event);
+              },
             },
           ],
         },
@@ -144,12 +159,10 @@ export const LoginFSM = createMachine(
       signInPopUp: fromPromise({
         /* ... */
       }),
-      signInPW: fromPromise(async (ctx) => {
-        signInWithEmailAndPassword(
-          auth,
-          ctx.event.params.email,
-          ctx.event.params.pw,
-        );
+      signInPW: fromPromise(async (ctx, event) => {
+        console.log("in promise")
+        auth.signInWithEmailAndPassword(event.email, event.password )
+         
       }),
       createPWAcct: fromPromise(async (ctx) => {
         createUserWithEmailAndPassword(

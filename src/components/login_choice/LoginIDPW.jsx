@@ -18,6 +18,8 @@ import {
 } from '@mui/material';
 import { AppActor } from '../../fsm/AppActor';
 
+const authActor = AppActor.system.get('authMachine')
+
 const LoginIDPW = () => {
 
   const [email, setEmail] = useState("");
@@ -36,16 +38,17 @@ const LoginIDPW = () => {
 
   const handleSubmit = (event) => { 
     event.preventDefault();
-    AppActor.send({ type: "SUBMIT", params: {email: email, pw: password } })
+    console.log("handleSubmit")
+    authActor.send({ type: "LOGIN_SUBMIT", params: {email: email, pw: password } })
   };
 
   const handleCreateAccount = (event) => {
     event.preventDefault();
-    AppActor.send({ type: "CREATE_ACCOUNT", params: {email: email, pw: password } })
+    authActor.send({ type: "CREATE_ACCOUNT", params: {email: email, pw: password } })
   };
 
   const handleClose = () => {
-    AppActor.send({ type: "CANCEL" })
+    authActor.send({ type: "CANCEL" })
   };
 
 

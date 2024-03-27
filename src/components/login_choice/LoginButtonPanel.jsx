@@ -16,16 +16,21 @@ const Root = styled(Container)(({ theme }) => ({
   height: '100vh',
 }));
 
+const authActor = AppActor.system.get('authMachine')
+
+console.log(authActor)
+
 
 const LoginButtonPanel = () => {
 
   const handleIDPW  = () => {
-    AppActor.send({ type: "LOGIN_PW_ID" })
+    authActor.send({ type: "LOGIN_PW" })
+    console.log("fuck you")
   }
 
   const handleGoogle  = () => {
     console.log("hey")
-    AppActor.send({ type: "LOGIN_GOOGLE" })
+    authActor.send({ type: "LOGIN_GOOGLE" })
   }
 
   return (
